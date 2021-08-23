@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 
 import {
   Card,
@@ -19,25 +20,21 @@ const useStyles = makeStyles({
     height: 345,
   },
 });
-function Products() {
+function Products(props) {
   const classes = useStyles();
-
+  console.log(props.products.products)
   return (
     <>
-      <Card style={{margin:'3rem'}} className={classes.root}>
+      {props.products.products.map(product => <Card style={{margin:'3rem',float:'left'}} key={product.id} className={classes.root}>
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image="https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9088.png"
+            image={product.img}
             title="Contemplative Reptile"
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
+              {product.name}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -49,9 +46,12 @@ function Products() {
             More info
           </Button>
         </CardActions>
-      </Card>
+      </Card>)}
     </>
   );
 }
+const mapStateToProps = (state) => {
+  return state;
+};
 
-export default Products;
+export default connect(mapStateToProps)(Products);
