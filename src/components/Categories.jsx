@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { connect } from 'react-redux';
-import { handleCategory, loadcategorys } from '../store/actions/index';
+import { handleCategory } from '../store/actions/index';
 
 const useStyles = makeStyles({
   root: {
@@ -13,15 +13,20 @@ const useStyles = makeStyles({
   },
 });
 
-function Categories(props) {
+function Categories() {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const state = useSelector((state) => state.categorys);
+
+ 
+  const dispatch = useDispatch();
+
   useEffect(()=>{
-    props.handleCategory('men')
-  },[])
+    dispatch(handleCategory('men'))
+  },[dispatch])
 
   const classes = useStyles();
   return (
@@ -35,12 +40,12 @@ function Categories(props) {
           centered
         >
           {
-          props.categorys.categoryList.map((cata) => {
+          state.categoryList.map((cata) => {
             return (
               <Tab
                 key={cata.displayName}
                 label={cata.displayName}
-                onClick={() => props.handleCategory(cata.name)}
+                onClick={() => dispatch(handleCategory(cata.name))}
               />
             );
           })
@@ -51,9 +56,5 @@ function Categories(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return state;
-};
-const mapDispatchToProps = { handleCategory, loadcategorys };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default Categories;

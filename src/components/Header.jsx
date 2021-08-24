@@ -4,7 +4,6 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   IconButton,
   makeStyles
 } from '@material-ui/core';
@@ -38,7 +37,6 @@ function Header() {
           <Typography variant="h6" className={classes.title}>
             Our Store
           </Typography>
-          <Button color="inherit">Cart</Button>
         </Toolbar>
       </AppBar>
     </>

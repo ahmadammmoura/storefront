@@ -14,3 +14,18 @@ export const loadcategorys = (category) => {
     payload: category,
   };
 };
+
+export const addCart = (product) => {
+  return {
+    type: 'ADD_CART',
+    payload: product,
+  };
+};
+
+export const removeCart = (id) => {
+  console.log(id)
+  return {
+    type: 'REMOVE_CART',
+    payload: id
+  };
+};
