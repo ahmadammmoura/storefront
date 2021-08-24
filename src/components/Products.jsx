@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux'
+import {addCart} from '../store/actions/'
 
 import {
   Card,
@@ -14,18 +15,20 @@ import {
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 300,
+    maxWidth: 330,
   },
   media: {
-    height: 345,
+    height: 330,
   },
 });
 function Products(props) {
+  const state = useSelector(state => state.products);
+  const dispatch = useDispatch();
+  console.log(state)
   const classes = useStyles();
-  console.log(props.products.products)
   return (
     <>
-      {props.products.products.map(product => <Card style={{margin:'3rem',float:'left'}} key={product.id} className={classes.root}>
+      {state.products.map(product => <Card style={{margin:'3rem',float:'left'}} key={product.id} className={classes.root}>
         <CardActionArea>
           <CardMedia
             className={classes.media}
@@ -39,7 +42,7 @@ function Products(props) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button onClick={()=> dispatch(addCart(product)) } size="small" color="primary">
             add to Cart
           </Button>
           <Button size="small" color="primary">
@@ -50,8 +53,5 @@ function Products(props) {
     </>
   );
 }
-const mapStateToProps = (state) => {
-  return state;
-};
 
-export default connect(mapStateToProps)(Products);
+export default Products;
