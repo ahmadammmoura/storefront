@@ -5,7 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { handleCategory } from '../store/actions/index';
+import { handleCategory ,getCategories} from '../store/actions/index';
 
 const useStyles = makeStyles({
   root: {
@@ -20,11 +20,12 @@ function Categories() {
   };
 
   const state = useSelector((state) => state.categorys);
-
+  console.log(state)
  
   const dispatch = useDispatch();
 
   useEffect(()=>{
+    dispatch(getCategories())
     dispatch(handleCategory('men'))
   },[dispatch])
 
@@ -43,8 +44,8 @@ function Categories() {
           state.categoryList.map((cata) => {
             return (
               <Tab
-                key={cata.displayName}
-                label={cata.displayName}
+                key={cata.name}
+                label={cata.name}
                 onClick={() => dispatch(handleCategory(cata.name))}
               />
             );
